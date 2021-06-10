@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,11 @@ namespace Custom_Rating_Star_Control
 
             InitializeComponent();
         }
-        [Category("Star Size")]
+
+        [Category("Data")]                                  //      --- CALISMIYOR ---
+        [Description("Size of single star.")]
+        [Editor(typeof(int), typeof(UITypeEditor))]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         private int StarSize
         {
             get => starSize;
@@ -27,21 +32,24 @@ namespace Custom_Rating_Star_Control
                     starSize = value;
             }
         }
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            starSize = Size.Height;
+
+            base.OnSizeChanged(e);
+        }
         protected override void OnPaint(PaintEventArgs pe)
         {
+            DrawStar(pe.Graphics);
 
-            Pen pen = new Pen(Color.Black);
-            //Point[] points = new Point[8];
-            //points[0] = new Point(0, 25);
-            //points[1] = new Point(20, 20);
-            //points[2] = new Point(25, 0);
-            //points[3] = new Point(30, 20);
-            //points[4] = new Point(50, 25);
-            //points[5] = new Point(30, 30);
-            //points[6] = new Point(25, 50);
-            //points[7] = new Point(20, 30);
-            
+            base.OnPaint(pe);
+        }
+
+        protected void DrawStar(Graphics g)
+        {
+            Pen pen = new Pen(Color.Black, 2.5f);
             PointF[] points = new PointF[10];
+            
             points[0].X = StarSize * (50) / 100;
             points[0].Y = StarSize * (2.4472f) / 100;
             points[1].X = StarSize * (61.8044f) / 100;
@@ -63,9 +71,8 @@ namespace Custom_Rating_Star_Control
             points[9].X = StarSize * (38.1966f) / 100;
             points[9].Y = StarSize * (38.7743f) / 100;
 
-            pe.Graphics.DrawPolygon(pen, points);
+            g.DrawPolygon(pen, points);
 
-            base.OnPaint(pe);
         }
 
         #region Protected Data
