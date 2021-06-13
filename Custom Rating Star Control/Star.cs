@@ -42,9 +42,6 @@ namespace Custom_Rating_Star_Control
 
         public Star()
         {
-
-            
-
             InitializeComponent();
         }
 

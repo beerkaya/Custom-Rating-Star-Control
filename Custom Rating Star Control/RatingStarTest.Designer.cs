@@ -34,9 +34,9 @@ namespace Custom_Rating_Star_Control
             // 
             // myStarRatingBar1
             // 
-            this.myStarRatingBar1.Location = new System.Drawing.Point(78, 127);
+            this.myStarRatingBar1.Location = new System.Drawing.Point(137, 121);
             this.myStarRatingBar1.Name = "myStarRatingBar1";
-            this.myStarRatingBar1.Size = new System.Drawing.Size(580, 104);
+            this.myStarRatingBar1.Size = new System.Drawing.Size(455, 67);
             this.myStarRatingBar1.StartPoint = 0;
             this.myStarRatingBar1.TabIndex = 0;
             this.myStarRatingBar1.Text = "myStarRatingBar1";

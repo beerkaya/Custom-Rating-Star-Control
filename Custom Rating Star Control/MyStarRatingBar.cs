@@ -53,7 +53,7 @@ namespace Custom_Rating_Star_Control
                 {
                     starSize = value;
                     stars.ForEach(star => star.StarSize = value);
-                    Width = StarSize;
+                    Height = StarSize;
 
                     Invalidate();
                 }
@@ -72,6 +72,7 @@ namespace Custom_Rating_Star_Control
                 {
                     starSpacing = value;
 
+                    Width = StarSize * 5 + StarSpacing * 4;
 
                     Invalidate();
                 }
