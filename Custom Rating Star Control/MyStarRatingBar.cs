@@ -15,10 +15,9 @@ namespace Custom_Rating_Star_Control
 {
     public partial class MyStarRatingBar : Control
     {
-        public List<Star> stars = new List<Star>();
+        private List<Star> stars = new List<Star>();
         public MyStarRatingBar()
         {
-
             for (int i = 0; i < 5; i++)
             {
                 Star tempStar = new(this);
@@ -26,13 +25,11 @@ namespace Custom_Rating_Star_Control
                 tempStar.Active = false;
                 tempStar.Location = new System.Drawing.Point(StartPoint, 0);
                 tempStar.Size = new System.Drawing.Size(StarSize, StarSize);
-                tempStar.StarActiveBackColor = System.Drawing.Color.DarkBlue;
-                tempStar.StarHoverBackColor = System.Drawing.Color.Yellow;
                 tempStar.TabIndex = 0;
 
                 stars.Add(tempStar);
-
                 this.Controls.Add(tempStar);
+                tempStar.Invalidate();
 
                 StartPoint += StarSize;
                 StartPoint += StarSpacing;
@@ -41,6 +38,8 @@ namespace Custom_Rating_Star_Control
 
             InitializeComponent();
         }
+
+        #region Properties
 
         [Category("Layout"),
         Description("Size of single star."),
@@ -63,7 +62,7 @@ namespace Custom_Rating_Star_Control
 
         [Category("Layout"),
         Description("The space beetween two stars."),
-        DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public int StarSpacing
         {
             get => starSpacing;
@@ -82,7 +81,7 @@ namespace Custom_Rating_Star_Control
 
         [Category("Design"),
         Description("The active color of the stars."),
-        DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public Color StarActiveBackColor
         {
             get => starActiveBackColor;
@@ -90,13 +89,14 @@ namespace Custom_Rating_Star_Control
             {
                 starActiveBackColor = value;
                 stars.ForEach(star => star.StarActiveBackColor = value);
+
                 Invalidate();
             }
         }
 
         [Category("Design"),
         Description("The hovering color of the stars."),
-        DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public Color StarHoverBackColor
         {
             get => starHoverBackColor;
@@ -110,6 +110,7 @@ namespace Custom_Rating_Star_Control
         }
 
         [Category("Data"),
+        Browsable(false),
         Description("The point value."),
         DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public int Value
@@ -121,7 +122,9 @@ namespace Custom_Rating_Star_Control
                     this.value = value;
             }
         }
-        protected int StartPoint
+
+        [Browsable(false)]
+        public int StartPoint
         {
             get => startPoint;
             set
@@ -132,9 +135,13 @@ namespace Custom_Rating_Star_Control
                 }
             }
         }
+
+        #endregion
+
         protected override void OnSizeChanged(EventArgs e)
         {
             StarSize = Size.Height;
+
             foreach (var star in stars)
             {
                 star.Width = StarSize;
@@ -145,7 +152,6 @@ namespace Custom_Rating_Star_Control
 
             base.OnSizeChanged(e);
         }
-
         protected override void OnPaint(PaintEventArgs pe)
         {
             foreach (var star in stars)
@@ -174,12 +180,11 @@ namespace Custom_Rating_Star_Control
                 star.Active = false;
                 star.Invalidate();
             }
-            for (int i = 0; i < index + 1; i++)
+            for (int i = 0; i < Value; i++)
             {
                 stars[i].Active = true;
                 stars[i].Invalidate();
             }
-
         }
         public void star_MouseEnter(object sender, EventArgs e)
         {
@@ -213,13 +218,11 @@ namespace Custom_Rating_Star_Control
             }
         }
 
-
-
         #region Protected Data
 
         protected int value = 0;
         protected int starSize = 50;
-        private int starSpacing = 15;
+        protected int starSpacing = 15;
         protected int startPoint = 0;
         protected Color starActiveBackColor = Color.DarkBlue;
         protected Color starHoverBackColor = Color.Yellow;

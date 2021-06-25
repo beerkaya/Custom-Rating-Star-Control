@@ -10,16 +10,17 @@ using System.Windows.Forms;
 
 namespace Custom_Rating_Star_Control
 {
+    [ToolboxItem(false)]
     public partial class Star : Control
     {
-        public MyStarRatingBar RatingBar;
-
         public delegate void ActiveEventHandler(object sender, EventArgs e);
         public delegate void HoverEventHandler(object sender, EventArgs e);
 
         public event ActiveEventHandler StarActive;
         public event HoverEventHandler StarMouseEnter;
         public event HoverEventHandler StarMouseLeave;
+
+        #region Properties
 
         [Category("Layout"),
         Description("Size of single star."),
@@ -64,6 +65,8 @@ namespace Custom_Rating_Star_Control
         }
         public readonly PointF[] StarPoints = new PointF[10];
 
+        #endregion
+
         public Star(MyStarRatingBar RatingBar)
         {
             this.RatingBar = RatingBar;
@@ -71,6 +74,7 @@ namespace Custom_Rating_Star_Control
             StarActive += new ActiveEventHandler(RatingBar.star_StarActive);
             StarMouseEnter += new HoverEventHandler(RatingBar.star_MouseEnter);
             StarMouseLeave += new HoverEventHandler(RatingBar.star_MouseLeave);
+
             InitializeComponent();
         }
 
@@ -142,7 +146,6 @@ namespace Custom_Rating_Star_Control
 
             base.OnClick(e);
         }
-
         protected override void OnSizeChanged(EventArgs e)
         {
             StarSize = Size.Height;
@@ -154,6 +157,7 @@ namespace Custom_Rating_Star_Control
 
         #region Protected Data
 
+        protected MyStarRatingBar RatingBar;
         protected int starSize = 50;
         protected bool hovering = false;
         protected bool active = false;

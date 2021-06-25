@@ -34,10 +34,14 @@ namespace Custom_Rating_Star_Control
             // 
             // myStarRatingBar1
             // 
-            this.myStarRatingBar1.Location = new System.Drawing.Point(146, 203);
+            this.myStarRatingBar1.Location = new System.Drawing.Point(70, 132);
             this.myStarRatingBar1.Name = "myStarRatingBar1";
-            this.myStarRatingBar1.Size = new System.Drawing.Size(355, 71);
-            this.myStarRatingBar1.TabIndex = 2;
+            this.myStarRatingBar1.Size = new System.Drawing.Size(570, 86);
+            this.myStarRatingBar1.StarActiveBackColor = System.Drawing.Color.DodgerBlue;
+            this.myStarRatingBar1.StarHoverBackColor = System.Drawing.Color.Goldenrod;
+            this.myStarRatingBar1.StarSpacing = 35;
+            this.myStarRatingBar1.StartPoint = 0;
+            this.myStarRatingBar1.TabIndex = 0;
             this.myStarRatingBar1.Text = "myStarRatingBar1";
             this.myStarRatingBar1.Value = 0;
             // 
@@ -54,6 +58,7 @@ namespace Custom_Rating_Star_Control
         }
 
         #endregion
+
         private MyStarRatingBar myStarRatingBar1;
     }
 }
