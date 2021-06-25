@@ -12,6 +12,15 @@ namespace Custom_Rating_Star_Control
 {
     public partial class Star : Control
     {
+        public MyStarRatingBar RatingBar;
+
+        public delegate void ActiveEventHandler(object sender, EventArgs e);
+        public delegate void HoverEventHandler(object sender, EventArgs e);
+
+        public event ActiveEventHandler StarActive;
+        public event HoverEventHandler StarMouseEnter;
+        public event HoverEventHandler StarMouseLeave;
+
         [Category("Layout"),
         Description("Size of single star."),
         DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
@@ -28,20 +37,40 @@ namespace Custom_Rating_Star_Control
                 }
             }
         }
-        public Color StarBackColor
+        public Color StarActiveBackColor
         {
-            get => starBackColor;
-            set => starBackColor = value;
+            get => starActiveBackColor;
+            set
+            {
+                starActiveBackColor = value;
+                Invalidate();
+            }
         }
+        public Color StarHoverBackColor
+        {
+            get => starHoverBackColor;
+            set => starHoverBackColor = value;
+        }
+
         public bool Active
         {
-            get => active; 
+            get => active;
             set => active = value;
+        }
+        public bool Hovering
+        {
+            get => hovering;
+            set => hovering = value;
         }
         public readonly PointF[] StarPoints = new PointF[10];
 
-        public Star()
+        public Star(MyStarRatingBar RatingBar)
         {
+            this.RatingBar = RatingBar;
+
+            StarActive += new ActiveEventHandler(RatingBar.star_StarActive);
+            StarMouseEnter += new HoverEventHandler(RatingBar.star_MouseEnter);
+            StarMouseLeave += new HoverEventHandler(RatingBar.star_MouseLeave);
             InitializeComponent();
         }
 
@@ -53,11 +82,11 @@ namespace Custom_Rating_Star_Control
 
             if (hovering)
             {
-                fillBrush = new SolidBrush(Color.Yellow);
+                fillBrush = new SolidBrush(StarHoverBackColor);
             }
             else if(!hovering && active)
             {
-                fillBrush = new SolidBrush(StarBackColor);
+                fillBrush = new SolidBrush(StarActiveBackColor);
             }
             else
             {
@@ -92,6 +121,7 @@ namespace Custom_Rating_Star_Control
         protected override void OnMouseEnter(EventArgs e)
         {
             hovering = true;
+            StarMouseEnter(this, new EventArgs());
             Invalidate();
 
             base.OnMouseEnter(e);
@@ -99,6 +129,7 @@ namespace Custom_Rating_Star_Control
         protected override void OnMouseLeave(EventArgs e)
         {
             hovering = false;
+            StarMouseLeave(this, new EventArgs());
             Invalidate();
 
             base.OnMouseLeave(e);
@@ -106,6 +137,7 @@ namespace Custom_Rating_Star_Control
         protected override void OnClick(EventArgs e)
         {
             active = true;
+            StarActive(this, new EventArgs());
             Invalidate();
 
             base.OnClick(e);
@@ -123,10 +155,10 @@ namespace Custom_Rating_Star_Control
         #region Protected Data
 
         protected int starSize = 50;
-        protected Graphics g = null;
         protected bool hovering = false;
         protected bool active = false;
-        protected Color starBackColor = Color.DarkBlue;
+        protected Color starActiveBackColor = Color.DarkBlue;
+        protected Color starHoverBackColor = Color.Yellow;
 
         #endregion
     }

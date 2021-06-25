@@ -34,12 +34,12 @@ namespace Custom_Rating_Star_Control
             // 
             // myStarRatingBar1
             // 
-            this.myStarRatingBar1.Location = new System.Drawing.Point(137, 121);
+            this.myStarRatingBar1.Location = new System.Drawing.Point(146, 203);
             this.myStarRatingBar1.Name = "myStarRatingBar1";
-            this.myStarRatingBar1.Size = new System.Drawing.Size(455, 67);
-            this.myStarRatingBar1.StartPoint = 0;
-            this.myStarRatingBar1.TabIndex = 0;
+            this.myStarRatingBar1.Size = new System.Drawing.Size(355, 71);
+            this.myStarRatingBar1.TabIndex = 2;
             this.myStarRatingBar1.Text = "myStarRatingBar1";
+            this.myStarRatingBar1.Value = 0;
             // 
             // RatingStarTest
             // 
@@ -54,7 +54,6 @@ namespace Custom_Rating_Star_Control
         }
 
         #endregion
-
         private MyStarRatingBar myStarRatingBar1;
     }
 }
